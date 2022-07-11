@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="0 0 44 44">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="#eaebef"/>
+    </linearGradient>
+    <filter id="Rectangle_2914" x="0" y="0" width="44" height="44" filterUnits="userSpaceOnUse">
+      <feOffset dy="2" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Subtraction_116" x="8.976" y="8.476" width="26.092" height="26.592" filterUnits="userSpaceOnUse">
+      <feOffset dy="2" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="0.5" result="blur-2"/>
+      <feFlood flood-color="#2d365c" flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Icon_feather-check" x="11.233" y="8.351" width="27.174" height="20.933" filterUnits="userSpaceOnUse">
+      <feOffset dy="2" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1" result="blur-3"/>
+      <feFlood flood-opacity="0.243"/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Optimo_SQLogo" transform="translate(-3 -7)">
+    <g transform="matrix(1, 0, 0, 1, 3, 7)" filter="url(#Rectangle_2914)">
+      <rect id="Rectangle_2914-2" data-name="Rectangle 2914" width="32" height="32" rx="6" transform="translate(6 4)" fill="url(#linear-gradient)"/>
+    </g>
+    <g id="Group_2712" data-name="Group 2712" transform="translate(-7.858 -13.944)">
+      <g transform="matrix(1, 0, 0, 1, 10.86, 20.94)" filter="url(#Subtraction_116)">
+        <path id="Subtraction_116-2" data-name="Subtraction 116" d="M912.881-1995.963a11.473,11.473,0,0,1-4.495-.907,11.521,11.521,0,0,1-3.67-2.474,11.582,11.582,0,0,1-1.717-2.187h6.459a6.856,6.856,0,0,0,.927.478,6.782,6.782,0,0,0,2.659.537,6.789,6.789,0,0,0,2.659-.537,6.81,6.81,0,0,0,2.171-1.463,6.8,6.8,0,0,0,1.463-2.171,6.786,6.786,0,0,0,.537-2.659,6.78,6.78,0,0,0-.537-2.659,6.8,6.8,0,0,0-1.463-2.171,6.807,6.807,0,0,0-2.171-1.464,6.783,6.783,0,0,0-2.659-.536,6.777,6.777,0,0,0-2.659.536,6.8,6.8,0,0,0-2.172,1.464,6.8,6.8,0,0,0-1.463,2.171,6.771,6.771,0,0,0-.534,2.473h-4.881a11.474,11.474,0,0,1,.907-4.472,11.506,11.506,0,0,1,2.474-3.669,11.511,11.511,0,0,1,3.67-2.475,11.475,11.475,0,0,1,4.495-.907,11.475,11.475,0,0,1,4.495.907,11.5,11.5,0,0,1,3.669,2.475A11.5,11.5,0,0,1,923.52-2012a11.477,11.477,0,0,1,.907,4.495,11.476,11.476,0,0,1-.907,4.495,11.5,11.5,0,0,1-2.475,3.67,11.507,11.507,0,0,1-3.669,2.474A11.473,11.473,0,0,1,912.881-1995.963Zm-4.682-6.568h-5.74c-.079-.165-.152-.327-.218-.483s-.14-.343-.2-.517h5.338a6.861,6.861,0,0,0,.821,1Zm-1.381-2h-5.1c-.088-.332-.162-.669-.219-1h4.954a6.816,6.816,0,0,0,.293.844q.033.078.068.154Z" transform="translate(-890.86 2027.53)" fill="#4272ce"/>
+      </g>
+      <path id="Subtraction_115" data-name="Subtraction 115" d="M4.88,11.517H0A11.529,11.529,0,0,1,11.545,0,11.514,11.514,0,0,1,23.09,11.516H18.535a6.833,6.833,0,0,0-11.6-4.708A6.765,6.765,0,0,0,4.88,11.517Z" transform="translate(21.338 29.376)" fill="#2d5ab2"/>
+      <g transform="matrix(1, 0, 0, 1, 10.86, 20.94)" filter="url(#Icon_feather-check)">
+        <path id="Icon_feather-check-2" data-name="Icon feather-check" d="M23.5,10.034,11.812,21.829,6,16.017" transform="translate(10.07 1.16)" fill="none" stroke="#5489ef" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.6"/>
+      </g>
+    </g>
+  </g>
+</svg>
