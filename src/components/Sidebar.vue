@@ -1,182 +1,95 @@
-<template>
-  <aside :class="`${sidebarIsOpen ? 'is-open' : ''} wrapper`">
-    <router-link class="logo" to="/">
-      <img class="icon" src="../assets/Optimo_SQLogo.svg" alt="Optimo Icon" />
-    </router-link>
-    <div class="menu-toggle-button-wrap">
-      <button class="menu-toggle-button" @click="toggleSidebar">
-        <img class="icon" src="../assets/Collapse-Btn.svg" alt="Open Icon" />
-      </button>
-      <div class="menu">
-        <router-link class="button" to="/videos">
-          <img class="icon" src="../assets/videos-icon.svg" alt="Videos Icon" />
-          <span class="text">Videos</span>
-        </router-link>
-        <router-link class="button" to="/annotator">
-          <img class="icon" src="../assets/annotator-icon.svg" alt="Annotator Icon" />
-          <span class="text">Annotator</span>
-        </router-link>
-        <router-link class="button" to="/training">
-          <img class="icon" src="../assets/training-icon.svg" alt="Training Icon" />
-          <span class="text">Training</span>
-        </router-link>
-        <router-link class="button" to="/inference">
-          <img class="icon" src="../assets/inference-icon.svg" alt="Inference Icon" />
-          <span class="text">Inference</span>
-        </router-link>
-        <router-link class="button" to="/work-insights">
-          <img class="icon" src="../assets/work-insights-icon.svg" alt="Work Insights Icon" />
-          <span class="text">Work Insights</span>
-        </router-link>
-      </div>
-    </div>
-    <div class="flex"></div>
-    <div class="menu">
-      <router-link class="button" to="/settings">
-        <img style="width: 20px" class="icon" src="../assets/languages.svg" alt="My Account Icon" />
-        <span class="text">English</span>
-      </router-link>
-    </div>
-    <div class="menu">
-      <router-link class="button" to="/settings">
-        <img
-          style="background-color: #fff; padding: 6px; border-radius: 50%; width: 38px"
-          class="icon"
-          src="../assets/profile.svg"
-          alt="My Account Icon"
-        />
-        <span class="text">My Account</span>
-      </router-link>
-    </div>
-  </aside>
-</template>
-<script lang="ts" setup>
-  import { ref } from "vue"
-
-  const sidebarIsOpen = ref<Boolean>(true)
-  function toggleSidebar() {
-    sidebarIsOpen.value = !sidebarIsOpen.value
+<script lang="ts">
+  import SidebarLink from "./SidebarLink.vue"
+  import { collapsed, toggleSidebar, sidebarWidth } from "./state"
+  export default {
+    props: {},
+    components: { SidebarLink },
+    setup() {
+      return { collapsed, toggleSidebar, sidebarWidth }
+    }
   }
 </script>
-<style lang="scss" scoped>
-  .wrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--primary);
-    color: var(--light);
-    width: calc(2rem + 32px);
-    overflow: hidden;
-    min-height: 100vh;
-    padding: 1rem;
-    transition: 0.2s ease-in-out;
-    z-index: 1000;
-    .flex {
-      flex: 1 1 0%;
-    }
-    .logo {
-      width: 34px;
-      margin-bottom: 1rem;
-      // img {
-      //   width: 34px;
-      // }
-    }
 
-    .menu-toggle-button {
-      position: absolute;
-      top: 10px;
-      right: -5%;
-      -webkit-transform: scaleX(-1);
-      transform: scaleX(-1);
-      // margin-left: 2rem;
-      // top: 100;
-      // right: 5;
-      z-index: 10;
-      transition: 0.2s ease-in-out;
-      .icon {
-        width: 34px;
-        // font-size: 2rem;
-        color: var(--light);
-        transition: 0.2s ease-out;
-      }
-      &:hover {
-        .icon {
-          color: var(--primary);
-          // transform: translateX(0.5rem);
-        }
-      }
-    }
-    .button .text {
-      opacity: 0;
-      transition: 0.3s ease-out;
-    }
-    .menu {
-      margin: 0 -1rem;
-      .button {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        transition: 0.2s ease-in-out;
-        padding: 0.5rem 1rem;
-        // width: 34px;
-        .icon {
-          width: 34px;
-          // font-size: 2rem;
-          margin-right: 1rem;
-          color: var(--light);
-          transition: 0.2s ease-in-out;
-        }
-        .text {
-          color: var(--light);
-          transition: 0.2s ease-in-out;
-        }
-        &:hover {
-          background-color: var(--highlight);
-          .icon,
-          .text {
-            color: var(--light);
-          }
-        }
-        &.router-link-exact-active {
-          background-color: var(--highlight);
-          // border-right: 5px solid var(--primary);
-          .icon,
-          .text {
-            color: var(--light);
-          }
-        }
-      }
-    }
-    .footer {
-      opacity: 0;
-      transition: opacity 0.3s ease-in-out;
-      p {
-        font-size: 0.875rem;
-        color: var(--grey);
-      }
-    }
-    &.is-open {
-      width: var(--sidebar-width);
+<template>
+  <div class="sidebar" :style="{ width: sidebarWidth }">
+    <h1>
+      <SidebarLink to="/home" icon="videos-icon" label="Optimo" />
+      <!-- <SidebarLink to="/home" icon="videos-icon"
+        ><span class="sidebar-link-text" v-if="!collapsed">Hello</span></SidebarLink
+      > -->
+    </h1>
 
-      .menu-toggle-button {
-        -webkit-transform: scaleX(1);
-        transform: scaleX(1);
-      }
-      .button .text {
-        opacity: 1;
-      }
-      .button {
-        .icon {
-          margin-right: 1rem;
-        }
-      }
-      .footer {
-        opacity: 0;
-      }
-    }
-    @media (max-width: 1024px) {
-      position: absolute;
-      z-index: 99;
-    }
+    <SidebarLink to="/videos" icon="videos-icon" label="Videos" />
+    <SidebarLink to="/annotator" icon="videos-icon" label="Annotator" />
+    <SidebarLink to="/training" icon="videos-icon" label="Training" />
+    <SidebarLink to="/inference" icon="videos-icon" label="Inference" />
+    <SidebarLink to="/work-insights" icon="videos-icon" label="Work Insights" />
+    <!-- <SidebarLink to="/videos" icon="videos-icon"><span class="sidebar-link-text">Videos</span></SidebarLink>
+    <SidebarLink to="/annotator" icon="annotator-icon"><span class="sidebar-link-text">Annotator</span></SidebarLink>
+    <SidebarLink to="/training" icon="training-icon"><span class="sidebar-link-text">Training</span></SidebarLink>
+    <SidebarLink to="/inference" icon="inference-icon"><span class="sidebar-link-text">Images</span></SidebarLink>
+    <SidebarLink to="/work-insights" icon="work-insights-icon"
+      ><span class="sidebar-link-text">Work Insights</span></SidebarLink
+    > -->
+
+    <span class="collapse-icon" :class="{ 'rotate-180': collapsed }" @click="toggleSidebar"> >> </span>
+  </div>
+</template>
+
+<style>
+  :root {
+    --sidebar-bg-color: #4272ce;
+    --sidebar-item-hover: #5489ef;
+    --sidebar-item-active: #5489ef;
   }
+</style>
+
+<style lang="sass" scoped>
+  .sidebar
+    position: relative
+    display: flex
+    flex-direction: column
+    height: 100vh
+    width: auto
+    padding: 0.5em
+    color: white
+    // background: linear-gradient(90deg, pink 50px, cyan 182px)
+    background-color: var(--sidebar-bg-color)
+    // background: linear-gradient(to left, red 75%, blue 0%)
+    transition: 0.3s ease
+    z-index: 1
+    // &::after
+    //  content: ''
+    //  position: relative
+    //  top: -0.5em
+    //  bottom: 0
+    //  left: -0.5em
+    //  width: 50px
+    //  height: 100%
+    //  display: block
+    //  background-color: red
+    //  z-index: 1
+    // &::before
+    //   content: " "
+    //   display: block
+    //   height: 100%
+    //   width: 50px
+    //   background: blue
+
+  .sidebar h1
+    height: 2.5em
+  .sidebar-link-text
+    // margin-left: 2rem
+  .collapse-icon
+    position: absolute
+    bottom: 0
+    padding: 0.75em
+    color: rgba(255, 255, 255, 0.7)
+    transition: 0.2s linear
+    z-index: 2
+
+
+  .rotate-180
+    transform: rotate(180deg)
+    transition: 0.2s linear
 </style>
