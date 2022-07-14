@@ -1,29 +1,32 @@
 <script lang="ts">
-  import { computed } from "vue"
+  import { computed, ref } from "vue"
   import { useRoute } from "vue-router"
   import { collapsed } from "./state"
+  import { icons } from "../assets"
+
   export default {
     props: {
       to: { type: String, required: true },
       label: { type: String, required: true },
-      icon: { type: String, required: true, default: "videos-icon" }
+      icon: { type: String, required: true }
     },
     setup(props: any) {
       const route = useRoute()
       const isActive = computed(() => route.path === props.to)
-      return { isActive, collapsed }
+
+      return { isActive, collapsed, icons }
     }
   }
 </script>
 
 <template>
   <router-link :to="to" class="_link" :class="{ active: isActive }">
-    <!-- <img :src="require(`../assets/${icon}.svg`)" alt="" /> -->
-    <!-- <img :src="`../assets/${icon}-icon.svg`" alt="" :class="icon" /> -->
-    <img src="../assets/videos-icon.svg" alt="" class="_icon" />
+    <img class="_icon" :src="icons[icon]" alt="" />
+    <!-- <img :src="`../assets/${icon}.svg`" alt="" :class="icon" /> -->
+    <!-- <img src="../assets/videos-icon.svg" alt="" class="_icon" /> -->
     <!-- <i class="icon" :class="icon" /> -->
     <transition name="fade">
-      <div class="_tab-label" v-if="!collapsed">{{ label }}</div>
+      <div v-if="!collapsed" class="_tab-label">{{ label }}</div>
     </transition>
   </router-link>
 </template>
@@ -45,12 +48,10 @@
     font-weight: 400
     user-select: none
     margin: 0.1em 0
-    // padding: 0.4em
     border-radius: 0.25em
     height: 1.5em
     color: white
     text-decoration: none
-    // background: #000
     &:hover
       ._icon,
       ._tab-label
@@ -58,6 +59,7 @@
 
   ._icon
     border-radius: 6px
+    width: 34px
     // &:hover
     //   background-color: var(--sidebar-item-hover)
   .active

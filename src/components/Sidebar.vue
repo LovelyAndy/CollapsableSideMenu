@@ -1,9 +1,10 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts">
   import SidebarLink from "./SidebarLink.vue"
   import { collapsed, toggleSidebar, sidebarWidth } from "./state"
+  import Dropdown from "./Dropdown.vue"
   export default {
-    props: {},
-    components: { SidebarLink },
+    components: { SidebarLink, Dropdown },
     setup() {
       return { collapsed, toggleSidebar, sidebarWidth }
     }
@@ -11,41 +12,40 @@
 </script>
 
 <template>
-  <div class="sidebar" :style="{ width: sidebarWidth }">
-    <h1>
-      <SidebarLink to="/home" icon="videos-icon" label="Optimo" />
-      <!-- <SidebarLink to="/home" icon="videos-icon"
-        ><span class="sidebar-link-text" v-if="!collapsed">Hello</span></SidebarLink
-      > -->
-    </h1>
+  <div class="_sidebar" :style="{ width: sidebarWidth }">
+    <div class="_collapse-icon" :class="{ '_rotate-180': collapsed }" @click="toggleSidebar">
+      <img src="../assets/chevron-left.svg" alt="Collapse Sidebar" />
+    </div>
+    <router-link style="text-decoration: none" to="/">
+      <div class="_optimo-home-link">
+        <img style="width: 34px" src="../assets/optiomo-logo.svg" alt="Optimo Logo" />
+        <div v-if="!collapsed" class="_optimo-home-link-text">OPTIMO</div>
+      </div>
+    </router-link>
 
-    <SidebarLink to="/videos" icon="videos-icon" label="Videos" />
-    <SidebarLink to="/annotator" icon="videos-icon" label="Annotator" />
-    <SidebarLink to="/training" icon="videos-icon" label="Training" />
-    <SidebarLink to="/inference" icon="videos-icon" label="Inference" />
-    <SidebarLink to="/work-insights" icon="videos-icon" label="Work Insights" />
-    <!-- <SidebarLink to="/videos" icon="videos-icon"><span class="sidebar-link-text">Videos</span></SidebarLink>
-    <SidebarLink to="/annotator" icon="annotator-icon"><span class="sidebar-link-text">Annotator</span></SidebarLink>
-    <SidebarLink to="/training" icon="training-icon"><span class="sidebar-link-text">Training</span></SidebarLink>
-    <SidebarLink to="/inference" icon="inference-icon"><span class="sidebar-link-text">Images</span></SidebarLink>
-    <SidebarLink to="/work-insights" icon="work-insights-icon"
-      ><span class="sidebar-link-text">Work Insights</span></SidebarLink
-    > -->
-
-    <span class="collapse-icon" :class="{ 'rotate-180': collapsed }" @click="toggleSidebar"> >> </span>
+    <div class="_sidebar-links">
+      <SidebarLink to="/videos" icon="inference-icon" label="Videos" />
+      <SidebarLink to="/annotator" icon="inference-icon" label="Annotator" />
+      <SidebarLink to="/training" icon="inference-icon" label="Training" />
+      <SidebarLink to="/inference" icon="inference-icon" label="Inference" />
+      <SidebarLink to="/work-insights" icon="inference-icon" label="Work Insights" />
+    </div>
+    <div>
+      <Dropdown title="English" :items="[{ title: Chinese, link: '#' }]" />
+      <!-- <Dropdown /> -->
+    </div>
   </div>
 </template>
 
-<style>
-  :root {
-    --sidebar-bg-color: #4272ce;
-    --sidebar-item-hover: #5489ef;
-    --sidebar-item-active: #5489ef;
-  }
+<style lang="sass">
+  \:root
+    --sidebar-bg-color: #4272ce
+    --sidebar-item-hover: #5489ef
+    --sidebar-item-active: #5489ef
 </style>
 
 <style lang="sass" scoped>
-  .sidebar
+  ._sidebar
     position: relative
     display: flex
     flex-direction: column
@@ -58,38 +58,65 @@
     // background: linear-gradient(to left, red 75%, blue 0%)
     transition: 0.3s ease
     z-index: 1
-    // &::after
-    //  content: ''
-    //  position: relative
-    //  top: -0.5em
-    //  bottom: 0
-    //  left: -0.5em
-    //  width: 50px
-    //  height: 100%
-    //  display: block
-    //  background-color: red
-    //  z-index: 1
+    &::after
+     content: ''
+     position: absolute
+     top: 0
+     bottom: 0
+     left: 0
+     right: 0
+     width: 50px
+     height: 100%
+     display: block
+     background-color: #2d5ab2
+     z-index: -1
     // &::before
     //   content: " "
     //   display: block
     //   height: 100%
     //   width: 50px
     //   background: blue
+  ._sidebar-links > *:not(:last-child)
+      margin-bottom: 1rem
 
-  .sidebar h1
-    height: 2.5em
-  .sidebar-link-text
-    // margin-left: 2rem
-  .collapse-icon
+
+  ._collapse-icon
     position: absolute
-    bottom: 0
-    padding: 0.75em
-    color: rgba(255, 255, 255, 0.7)
-    transition: 0.2s linear
-    z-index: 2
+    top: 7%
+    right: -12px
+    display: inline-block
+    background-color: #4b4bd9
+    width: 1.5em
+    height: 1.5em
+    border: 0.25em solid #4b4bd9
+    border-radius: 50%
+    text-align: center
+    // padding: 0.75em
+    // background: #4b4bd9
+    // border-radius: 50%
+    // transition: 0.2s linear
+    // z-index: 5
 
+  ._optimo-home-link
+    position: relative
+    display: flex
+    align-items: center
+    cursor: pointer
+    user-select: none
+    margin-top: 1em
+    margin-bottom: 4em
+    border-radius: 0.25em
+    height: 1.5em
+    color: white
+    &-text
+      flex: 1
+      display: flex
+      margin-left: 2rem
+      text-align: left
+      text-decoration: none
+      font-size: 18px
 
-  .rotate-180
+  ._rotate-180
     transform: rotate(180deg)
     transition: 0.2s linear
 </style>
