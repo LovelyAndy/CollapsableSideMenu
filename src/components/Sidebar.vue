@@ -6,7 +6,10 @@
   export default {
     components: { SidebarLink, Dropdown },
     setup() {
-      return { collapsed, toggleSidebar, sidebarWidth }
+      function changeLang(lang: any) {
+        console.log(`lang → `, lang)
+      }
+      return { collapsed, toggleSidebar, sidebarWidth, changeLang }
     }
   }
 </script>
@@ -24,15 +27,19 @@
     </router-link>
 
     <div class="_sidebar-links">
-      <SidebarLink to="/videos" icon="inference-icon" label="Videos" />
-      <SidebarLink to="/annotator" icon="inference-icon" label="Annotator" />
-      <SidebarLink to="/training" icon="inference-icon" label="Training" />
+      <SidebarLink to="/videos" icon="videos-icon" label="Videos" />
+      <SidebarLink to="/annotator" icon="annotator-icon" label="Annotator" />
+      <SidebarLink to="/training" icon="training-icon" label="Training" />
       <SidebarLink to="/inference" icon="inference-icon" label="Inference" />
-      <SidebarLink to="/work-insights" icon="inference-icon" label="Work Insights" />
+      <SidebarLink to="/work-insights" icon="work-insights-icon" label="Work Insights" />
     </div>
-    <div>
-      <Dropdown title="English" :items="[{ title: Chinese, link: '#' }]" />
-      <!-- <Dropdown /> -->
+    <div style="margin-top: 50vh">
+      <Dropdown
+        tabindex="0"
+        :options="['English', 'Simplified Chinese', 'Traditional Chinese']"
+        :default="English"
+        @input="changeLang()"
+      />
     </div>
   </div>
 </template>
@@ -91,6 +98,7 @@
     border: 0.25em solid #4b4bd9
     border-radius: 50%
     text-align: center
+    cursor: pointer
     // padding: 0.75em
     // background: #4b4bd9
     // border-radius: 50%

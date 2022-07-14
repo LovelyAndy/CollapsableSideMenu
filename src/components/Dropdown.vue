@@ -1,66 +1,86 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="menu-item" @click="isOpen = !isOpen">
-    <a style="all: unset; color: #fff" href="#">
-      {{ title }}
-    </a>
-    <svg viewBox="0 0 1030 638" width="10">
-      <path
-        d="M1017 68L541 626q-11 12-26 12t-26-12L13 68Q-3 49 6 24.5T39 0h952q24 0 33 24.5t-7 43.5z"
-        fill="#FFF"
-      ></path>
-    </svg>
-    <!-- {{ isOpen }} -->
-    <!-- <div v-if="isOpen">
-      <div v-for="(item, i) in items" :key="i" class="menu-item">
-        <a :href="item.link">{{ item.title }}</a>
-      </div>
-    </div> -->
-    <transition name="fade" appear>
-      <div v-if="isOpen" class="sub-menu">
-        <div v-for="(item, i) in items" :key="i" class="menu-item">
-          <a style="all: unset" :href="item.link">{{ item.title }}</a>
+  <div class="_custom-select" @blur="isOpen = false">
+    <div style="display: flex; justify-content: space-between" @click="isOpen = !isOpen">
+      <img style="width: 34px" class="_icon" src="../assets/languages-icon.svg" alt="" />
+      <div class="_selected-option">
+        <div :class="{ open: isOpen }">
+          {{ selected }}
         </div>
+        <img class="_icon" src="../assets/chevron-down.svg" alt="" />
       </div>
-    </transition>
+    </div>
+    <div class="_options" :class="{ _hide: !isOpen }">
+      <div v-for="(option, i) of options" :key="i" @click="selectOption(option)">
+        {{ option }}
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
   import { PropType, ref } from "vue"
-  const props = defineProps({ title: { type: String }, items: { type: Array as PropType<any> } })
+  const props = defineProps({
+    options: { type: Array as PropType<string[]>, required: true },
+    default: { type: String, required: true }
+  })
+  const emit = defineEmits(["input"])
+  const selected = ref(props.default ? props.default : props.options.length > 0 ? props.options[0] : null)
+  const isOpen = ref(true)
 
-  const isOpen = ref(false)
+  function selectOption(_option: any) {
+    console.log(`_option → `, _option)
+    selected.value = _option
+    isOpen.value = false
+    emit("input", _option)
+  }
 </script>
 
-<style>
-  nav .menu-item svg {
-    width: 10px;
-    margin-left: 10px;
-  }
-  nav .menu-item .sub-menu {
-    position: absolute;
-    /* background-color: #222; */
-    top: calc(50%);
-    /* left: 50%; */
-    transform: translateY(-100%);
-    width: max-content;
-  }
-  /* nav .menu-item .sub-menu {
-    position: absolute;
-    background-color: #222;
-    top: calc(100% + 18px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: max-content;
-    border-radius: 0px 0px 16px 16px;
-  } */
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: all 0.5s ease-in-out;
-  }
-  .fade-enter,
-  .fade-leave-to {
-    opacity: 0;
-  }
+<style lang="sass">
+  ._custom-select
+    position: relative
+    width: 100%
+    text-align: left
+    outline: none
+    // background: #000
+    font-size: 16px
+    border-radius: 6px
+    &:hover
+      ._icon,
+      ._selected-option
+        background-color: var(--sidebar-item-hover)
+  ._selected-option
+    flex: 1
+    display: flex
+    justify-content: space-between
+    // background: red
+    margin-left: 1rem
+    text-align: left
+    border-radius: 6px
+    padding: 8px 18px
+    cursor: pointer
+    user-select: none
+    line-height: 26px
+  ._icon
+    width: 24px
+    border-radius: 6px
+
+  ._options
+    position: absolute
+    left: 0
+    right: 0
+    z-index: 1
+    font-size: 16px
+    > *
+      // padding-left: 1em
+      text-align: center
+      cursor: pointer
+      user-select: none
+      background: #000
+
+  ._custom-select ._options div:hover
+    background-color: var( --sidebar-item-hover)
+
+  ._hide
+    display: none
 </style>

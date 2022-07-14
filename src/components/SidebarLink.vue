@@ -21,10 +21,7 @@
 
 <template>
   <router-link :to="to" class="_link" :class="{ active: isActive }">
-    <img class="_icon" :src="icons[icon]" alt="" />
-    <!-- <img :src="`../assets/${icon}.svg`" alt="" :class="icon" /> -->
-    <!-- <img src="../assets/videos-icon.svg" alt="" class="_icon" /> -->
-    <!-- <i class="icon" :class="icon" /> -->
+    <img class="_icon" :src="icons[icon]" :alt="`${icon}`" />
     <transition name="fade">
       <div v-if="!collapsed" class="_tab-label">{{ label }}</div>
     </transition>
@@ -52,6 +49,7 @@
     height: 1.5em
     color: white
     text-decoration: none
+    white-space: nowrap
     &:hover
       ._icon,
       ._tab-label
