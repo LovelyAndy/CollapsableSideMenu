@@ -1,18 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
-<script lang="ts">
+<script lang="ts" setup>
   import SidebarLink from "./SidebarLink.vue"
   import { collapsed, toggleSidebar, sidebarWidth } from "./state"
   import Dropdown from "./Dropdown.vue"
-  export default {
-    components: { SidebarLink, Dropdown },
-    emits: ["change"],
-    setup(context: any) {
-      function changeLang(lang: any) {
-        console.log(`lang → `, lang)
-        context.emit("change", lang)
-      }
-      return { collapsed, toggleSidebar, sidebarWidth, changeLang }
-    }
+  const emit = defineEmits(["change"])
+  function changeLang(lang: any) {
+    console.log(`lang → `, lang)
+    emit("change", lang)
   }
 </script>
 
@@ -39,8 +33,8 @@
       <Dropdown
         tabindex="0"
         :options="['English', 'Simplified Chinese', 'Traditional Chinese']"
-        :default="English"
-        @input="changeLang()"
+        :default="'English'"
+        @input="changeLang"
       />
     </div>
   </div>
