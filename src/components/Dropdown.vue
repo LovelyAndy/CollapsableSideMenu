@@ -9,10 +9,10 @@
         </div>
         <img class="_icon" src="../assets/chevron-down.svg" alt="" />
       </div>
-    </div>
-    <div class="_options" :class="{ _hide: !isOpen }">
-      <div v-for="(option, i) of options" :key="i" @click="selectOption(option)">
-        {{ option }}
+      <div class="_options" :class="{ _hide: !isOpen }">
+        <div v-for="(option, i) of options" :key="i" @click="selectOption(option)">
+          {{ option }}
+        </div>
       </div>
     </div>
   </div>
@@ -67,16 +67,22 @@
 
   ._options
     position: absolute
-    left: 0
+    top: 100%
     right: 0
     z-index: 1
     font-size: 16px
     > *
-      // padding-left: 1em
-      text-align: center
+      border-radius: 6px
+      text-align: left
       cursor: pointer
       user-select: none
-      background: #000
+      padding: 6px
+      width: 100%
+    > *:hover
+      background-color: var( --sidebar-item-hover)
+
+    // > *:not(:last-child)
+      // margin-bottom: 0.5em
 
   ._custom-select ._options div:hover
     background-color: var( --sidebar-item-hover)

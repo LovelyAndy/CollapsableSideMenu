@@ -5,9 +5,11 @@
   import Dropdown from "./Dropdown.vue"
   export default {
     components: { SidebarLink, Dropdown },
-    setup() {
+    emits: ["change"],
+    setup(context: any) {
       function changeLang(lang: any) {
         console.log(`lang → `, lang)
+        context.emit("change", lang)
       }
       return { collapsed, toggleSidebar, sidebarWidth, changeLang }
     }
