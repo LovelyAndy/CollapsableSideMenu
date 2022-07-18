@@ -2,10 +2,9 @@
 <script lang="ts" setup>
   import SidebarLink from "./SidebarLink.vue"
   import { collapsed, toggleSidebar, sidebarWidth } from "./state"
-  import Dropdown from "./Dropdown.vue"
+  import LangDropdown from "./LangDropdown.vue"
   const emit = defineEmits(["change"])
   function changeLang(lang: any) {
-    console.log(`lang → `, lang)
     emit("change", lang)
   }
 </script>
@@ -30,7 +29,7 @@
       <SidebarLink to="/work-insights" icon="work-insights-icon" label="Work Insights" />
     </div>
     <div style="margin-top: 50vh">
-      <Dropdown
+      <LangDropdown
         tabindex="0"
         :options="['English', 'Simplified Chinese', 'Traditional Chinese']"
         :default="'English'"
@@ -122,5 +121,5 @@
 
   ._rotate-180
     transform: rotate(180deg)
-    transition: 0.2s linear
+    transition: 0.3s linear
 </style>
