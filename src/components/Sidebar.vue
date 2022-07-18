@@ -3,6 +3,7 @@
   import SidebarLink from "./SidebarLink.vue"
   import { collapsed, toggleSidebar, sidebarWidth } from "./state"
   import LangDropdown from "./LangDropdown.vue"
+  import MyAccountDropDown from "./MyAccountDropDown.vue"
   const emit = defineEmits(["change"])
   function changeLang(lang: any) {
     emit("change", lang)
@@ -28,13 +29,14 @@
       <SidebarLink to="/inference" icon="inference-icon" label="Inference" />
       <SidebarLink to="/work-insights" icon="work-insights-icon" label="Work Insights" />
     </div>
-    <div style="margin-top: 50vh">
+    <div class="_dropdowns">
       <LangDropdown
         tabindex="0"
         :options="['English', 'Simplified Chinese', 'Traditional Chinese']"
         :default="'English'"
         @input="changeLang"
       />
+      <MyAccountDropDown />
     </div>
   </div>
 </template>
@@ -72,19 +74,13 @@
      display: block
      background-color: #2d5ab2
      z-index: -1
-    // &::before
-    //   content: " "
-    //   display: block
-    //   height: 100%
-    //   width: 50px
-    //   background: blue
   ._sidebar-links > *:not(:last-child)
-      margin-bottom: 1rem
+      margin-bottom: 2em
 
 
   ._collapse-icon
     position: absolute
-    top: 7%
+    top: 4em
     right: -12px
     display: inline-block
     background-color: #4b4bd9
@@ -122,4 +118,10 @@
   ._rotate-180
     transform: rotate(180deg)
     transition: 0.3s linear
+
+  ._dropdowns
+    margin-top: auto
+    margin-bottom: 8em
+    > *:first-child
+      margin-bottom: 2em
 </style>

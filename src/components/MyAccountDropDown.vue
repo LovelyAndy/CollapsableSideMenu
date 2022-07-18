@@ -2,17 +2,22 @@
 <template>
   <div class="_custom-select" @blur="isOpen = false">
     <div style="display: flex; justify-content: space-between" @click="isOpen = !isOpen">
-      <img style="width: 34px" class="_icon" src="../assets/languages-icon.svg" alt="Change Language Icon" />
+      <img style="width: 34px" class="_icon" src="../assets/profile-icon.svg" alt="Change Language Icon" />
       <div v-if="!collapsed" class="_selected-option">
-        <div>
-          {{ selected }}
-        </div>
+        <div>My Account</div>
         <img class="_icon" src="../assets/chevron-down.svg" alt="" />
       </div>
       <transition name="slide">
         <ul v-if="isOpen && !collapsed" class="_options">
-          <li v-for="(option, i) of options" :key="i" @click="selectOption(option)">
-            {{ option }}
+          <li @click="logout">Logout</li>
+          <li>
+            <router-link to="/">User Management</router-link>
+          </li>
+          <li style="display: flex">
+            <a href="https://www.youtube.com/watch?v=yivLt9cTaio&ab_channel=MusicGuide" target="_blank">
+              Help
+              <img style="width: 14px; margin-left: 0.5em" src="../assets/docs-icon.svg" alt="" />
+            </a>
           </li>
         </ul>
       </transition>
@@ -23,22 +28,19 @@
 <script lang="ts" setup>
   import { PropType, ref } from "vue"
   import { collapsed } from "./state"
-  const props = defineProps({
-    options: { type: Array as PropType<string[]>, required: true },
-    default: { type: String, required: true }
-  })
-  const emit = defineEmits(["input"])
-  const selected = ref(props.default ? props.default : props.options.length > 0 ? props.options[0] : null)
   const isOpen = ref(true)
   if (collapsed) isOpen.value = false
-  function selectOption(_option: any) {
-    selected.value = _option
-    isOpen.value = false
-    emit("input", _option)
+  function logout() {
+    alert("You have been logged out!")
   }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
+  button,
+  a
+    all: unset
+    cursor: pointer
+    width: max-content
   ._custom-select
     position: relative
     width: 100%
@@ -84,7 +86,9 @@
       width: 100%
     > *:hover
       background-color: var( --sidebar-item-hover)
-  .slide-move
+    > *:not(:last-child)
+      margin-bottom: 0.5em
+
   .slide-enter-from,
   .slide-leave-to
     transform: scaleY(0)
