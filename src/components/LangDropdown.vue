@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div :class="{ _open: dropdownIsOpen }" class="_custom-select" @blur="dropdownIsOpen = false">
+  <div class="_custom-select" @blur="dropdownIsOpen = false">
     <div class="_custom-select-inner" @click="dropdownIsOpen = !dropdownIsOpen">
       <div style="display: flex">
         <img style="width: 34px" class="_icon" src="../assets/languages-icon.svg" alt="Change Language Icon" />
@@ -13,19 +13,17 @@
           </div>
         </div>
       </div>
-      <transition name="slide" mode="in-out">
-        <ul v-if="dropdownIsOpen && !collapsed" class="_options">
-          <li v-for="(option, i) of options" :key="i" @click="selectOption(option)">
-            {{ option }}
-          </li>
-        </ul>
-      </transition>
+      <ul v-show="!collapsed" ref="bodyEl" class="_options" :style="bodyStyle">
+        <li v-for="(option, i) of options" :key="i" @click="selectOption(option)">
+          {{ option }}
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { PropType, ref } from "vue"
+  import { PropType, ref, watchEffect, onMounted, onBeforeUnmount } from "vue"
   import { collapsed } from "./state"
   const props = defineProps({
     options: { type: Array as PropType<string[]>, required: true },
@@ -35,6 +33,15 @@
   const selected = ref(props.default ? props.default : props.options.length > 0 ? props.options[0] : null)
   const dropdownIsOpen = ref(true)
   if (collapsed) dropdownIsOpen.value = false
+  const bodyEl = ref<any>(null)
+  const bodyStyle = ref({})
+  const update = () =>
+    (bodyStyle.value = {
+      maxHeight: `${dropdownIsOpen.value ? bodyEl.value.scrollHeight : 0}px`
+    })
+  watchEffect(update)
+  onMounted(() => window.addEventListener("resize", update))
+  onBeforeUnmount(() => window.removeEventListener("resize", update))
   function selectOption(_option: any) {
     selected.value = _option
     dropdownIsOpen.value = false
@@ -42,7 +49,7 @@
   }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
   ._custom-select
     position: relative
     width: 100%
@@ -55,8 +62,6 @@
       ._icon,
       ._selected-option
         background-color: var(--sidebar-item-hover)
-  // ._open
-  //   margin-bottom: 0
   ._custom-select-inner
     display: flex
     flex-direction: column
@@ -77,17 +82,12 @@
     border-radius: 6px
     cursor: pointer
   ._options
-    // position: absolute
-    // right: 0
-    // top: 100%
-    margin: 0
-    margin-left: auto
-    padding: 8px
-    padding-top: 0
-    list-style-type: none
-    transform-origin: top
-    transition: transform 300ms ease-in-out
     overflow: hidden
+    max-height: 0
+    padding: 0 0.5rem
+    transition: max-height .3s cubic-bezier(.4,0,.2,1)
+    margin-left: auto
+    list-style-type: none
     > *
       border-radius: 6px
       text-align: left
@@ -97,11 +97,6 @@
       width: 100%
     > *:hover
       background-color: var( --sidebar-item-hover)
-
-  .slide-move,
-  .slide-enter-from,
-  .slide-leave-to
-    transform: scaleY(0)
 
   ._custom-select ._options div:hover
     background-color: var( --sidebar-item-hover)
