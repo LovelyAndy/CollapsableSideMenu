@@ -1,7 +1,6 @@
 <template>
   <div class="app">
     <Sidebar @change="changeLanguage" />
-    {{ selectedLanguage }}
     <div :style="{ 'margin-left': sidebarWidth }">
       <router-view />
     </div>

@@ -3,7 +3,7 @@
   import SidebarLink from "./SidebarLink.vue"
   import { collapsed, toggleSidebar, sidebarWidth } from "./state"
   import LangDropdown from "./LangDropdown.vue"
-  import MyAccountDropDown from "./MyAccountDropDown.vue"
+  import MyAccountDropdown from "./MyAccountDropdown.vue"
   const emit = defineEmits(["change"])
   function changeLang(lang: any) {
     emit("change", lang)
@@ -36,7 +36,7 @@
         :default="'English'"
         @input="changeLang"
       />
-      <MyAccountDropDown />
+      <MyAccountDropdown tabindex="0" />
     </div>
   </div>
 </template>
@@ -123,5 +123,5 @@
     margin-top: auto
     margin-bottom: 8em
     > *:first-child
-      margin-bottom: 2em
+      // margin-bottom: 2em
 </style>

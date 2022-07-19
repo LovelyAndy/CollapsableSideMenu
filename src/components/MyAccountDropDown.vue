@@ -1,14 +1,14 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="_custom-select" @blur="isOpen = false">
-    <div style="display: flex; justify-content: space-between" @click="isOpen = !isOpen">
+  <div class="_custom-select" @blur="dropdDownIsOpen = false">
+    <div style="display: flex; justify-content: space-between" @click="dropdDownIsOpen = !dropdDownIsOpen">
       <img style="width: 34px" class="_icon" src="../assets/profile-icon.svg" alt="Change Language Icon" />
       <div v-if="!collapsed" class="_selected-option">
         <div>My Account</div>
         <img class="_icon" src="../assets/chevron-down.svg" alt="" />
       </div>
       <transition name="slide">
-        <ul v-if="isOpen && !collapsed" class="_options">
+        <ul v-if="dropdDownIsOpen && !collapsed" class="_options">
           <li @click="logout">Logout</li>
           <li>
             <router-link to="/">User Management</router-link>
@@ -28,8 +28,8 @@
 <script lang="ts" setup>
   import { PropType, ref } from "vue"
   import { collapsed } from "./state"
-  const isOpen = ref(true)
-  if (collapsed) isOpen.value = false
+  const dropdDownIsOpen = ref(true)
+  if (collapsed) dropdDownIsOpen.value = false
   function logout() {
     alert("You have been logged out!")
   }
@@ -73,6 +73,7 @@
     top: 100%
     margin: 0
     padding: 8px
+    padding-top: 0
     list-style-type: none
     transform-origin: top
     transition: transform 300ms ease-in-out
@@ -86,8 +87,8 @@
       width: 100%
     > *:hover
       background-color: var( --sidebar-item-hover)
-    > *:not(:last-child)
-      margin-bottom: 0.5em
+    // > *:not(:last-child)
+    //   margin-bottom: 0.25em
 
   .slide-enter-from,
   .slide-leave-to
