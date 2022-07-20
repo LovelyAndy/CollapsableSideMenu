@@ -18,7 +18,7 @@
     <router-link style="text-decoration: none" to="/">
       <div class="_optimo-home-link">
         <img style="width: 34px" src="../assets/optiomo-logo.svg" alt="Optimo Logo" />
-        <div v-if="!collapsed" class="_optimo-home-link-text">OPTIMO</div>
+        <div v-if="!collapsed" class="_optimo-home-link-text">Home</div>
       </div>
     </router-link>
 
