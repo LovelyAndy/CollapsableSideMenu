@@ -3,29 +3,34 @@
   import { useRoute } from "vue-router"
   import { collapsed } from "./state"
   import { icons } from "../assets"
+  import Tooltip from "./Tooltip.vue"
 
   export default {
+    components: { Tooltip },
     props: {
       to: { type: String, required: true },
       label: { type: String, required: true },
-      icon: { type: String, required: true }
+      icon: { type: String, required: true },
+      tooltipText: { type: String, required: true },
+      tooltipFlow: { type: String, required: true }
     },
     setup(props: any) {
       const route = useRoute()
       const isActive = computed(() => route.path === props.to)
-
       return { isActive, collapsed, icons }
     }
   }
 </script>
 
 <template>
-  <router-link :to="to" class="_link" :class="{ active: isActive }">
-    <img class="_icon" :src="icons[icon]" :alt="`${icon}`" />
-    <transition name="fade">
-      <div v-if="!collapsed" class="_tab-label">{{ label }}</div>
-    </transition>
-  </router-link>
+  <Tooltip :text="tooltipText" :flow="tooltipFlow">
+    <router-link :to="to" class="_link" :class="{ active: isActive }">
+      <img class="_icon" :src="icons[icon]" :alt="`${icon}`" />
+      <transition name="fade">
+        <div v-if="!collapsed" class="_tab-label">{{ label }}</div>
+      </transition>
+    </router-link>
+  </Tooltip>
 </template>
 
 <style lang="sass" scoped>

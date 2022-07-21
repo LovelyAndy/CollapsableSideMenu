@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <Sidebar style="position: absolute" @change="changeLanguage" />
+    <Sidebar @change="changeLanguage" />
     <div :style="{ 'margin-left': sidebarWidth }">
       <router-view />
     </div>

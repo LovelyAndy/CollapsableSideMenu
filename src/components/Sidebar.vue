@@ -23,11 +23,41 @@
     </router-link>
 
     <div class="_sidebar-links">
-      <SidebarLink to="/videos" icon="videos-icon" label="Videos" />
-      <SidebarLink to="/annotator" icon="annotator-icon" label="Annotator" />
-      <SidebarLink to="/training" icon="training-icon" label="Training" />
-      <SidebarLink to="/inference" icon="inference-icon" label="Inference" />
-      <SidebarLink to="/work-insights" icon="work-insights-icon" label="Work Insights" />
+      <SidebarLink
+        to="/videos"
+        icon="videos-icon"
+        label="Videos"
+        :tooltipText="collapsed ? 'Videos' : ''"
+        tooltipFlow="right"
+      />
+      <SidebarLink
+        to="/annotator"
+        icon="annotator-icon"
+        label="Annotator"
+        :tooltipText="collapsed ? 'Annotator' : ''"
+        tooltipFlow="right"
+      />
+      <SidebarLink
+        to="/training"
+        icon="training-icon"
+        label="Training"
+        :tooltipText="collapsed ? 'Training' : ''"
+        tooltipFlow="right"
+      />
+      <SidebarLink
+        to="/inference"
+        icon="inference-icon"
+        label="Inference"
+        :tooltipText="collapsed ? 'Inference' : ''"
+        tooltipFlow="right"
+      />
+      <SidebarLink
+        to="/work-insights"
+        icon="work-insights-icon"
+        label="Work Insights"
+        :tooltipText="collapsed ? 'Work Insights' : ''"
+        tooltipFlow="right"
+      />
     </div>
     <div class="_dropdowns">
       <LangDropdown

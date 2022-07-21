@@ -1,3 +1,5 @@
+const { off } = require("process")
+
 module.exports = {
   env: {
     browser: true,
@@ -19,6 +21,7 @@ module.exports = {
     "import/no-absolute-path": "off",
     "import/no-extraneous-dependencies": "off",
     "vue/no-multiple-template-root": "off",
+    "vue/attribute-hyphenation": "off",
     "no-param-reassign": [
       "error",
       {
