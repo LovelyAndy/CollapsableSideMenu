@@ -151,7 +151,5 @@
 
   ._dropdowns
     margin-top: auto
-    margin-bottom: 8em
-    > *:first-child
-      // margin-bottom: 2em
+    margin-bottom: 3em
 </style>

@@ -1,12 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div
-    class="_custom-select"
-    @blur="dropdownIsOpen = false"
-    @mouseenter="() => startHover()"
-    @mouseleave="() => endHover()"
-  >
-    <div class="_custom-select-inner" @click="openDropdown">
+  <div class="_custom-select" @blur="() => closeDropdown()" @mouseenter="() => startHover()">
+    <!-- @mouseleave="() => endHover()" -->
+    <div class="_custom-select-inner" @click="() => openDropdown()">
       <div style="display: flex">
         <img style="width: 34px" class="_icon" src="../assets/languages-icon.svg" alt="Change Language Icon" />
         <div style="flex: 1; display: flex; justify-content: space-between">
@@ -18,12 +14,18 @@
           </div>
         </div>
       </div>
-      <ul v-show="hovering || !collapsed" ref="bodyEl" class="_options" :style="bodyStyle">
+      <ul
+        v-show="hovering || !collapsed"
+        ref="dropdownEl"
+        class="_options"
+        :style="dropdownElStyle"
+        @mouseleave="() => closeDropdown()"
+      >
         <li
           v-for="(option, i) of options"
           :key="i"
           :class="option === selected ? '_selected' : ''"
-          @click="selectOption(option)"
+          @click="() => selectOption(option)"
         >
           {{ option }}
         </li>
@@ -43,11 +45,11 @@
   const selected = ref(props.default ? props.default : props.options.length > 0 ? props.options[0] : null)
   const dropdownIsOpen = ref(true)
   if (collapsed) dropdownIsOpen.value = false
-  const bodyEl = ref<any>(null)
-  const bodyStyle = ref({})
+  const dropdownEl = ref<any>(null)
+  const dropdownElStyle = ref({})
   const update = () =>
-    (bodyStyle.value = {
-      maxHeight: `${dropdownIsOpen.value ? bodyEl.value.scrollHeight : 0}px`
+    (dropdownElStyle.value = {
+      maxHeight: `${dropdownIsOpen.value ? dropdownEl.value.scrollHeight : 0}px`
     })
   watchEffect(update)
   onMounted(() => window.addEventListener("resize", update))
@@ -61,11 +63,16 @@
     if (collapsed.value) return
     dropdownIsOpen.value = !dropdownIsOpen.value
   }
+  function closeDropdown() {
+    dropdownIsOpen.value = false
+    hovering.value = false
+    dropdownElStyle.value = {}
+  }
   const hovering = ref(false)
   function startHover() {
     if (!collapsed.value) return
     hovering.value = true
-    bodyStyle.value = {
+    dropdownElStyle.value = {
       maxHeight: "fit-content",
       position: "absolute",
       top: "-20%",
@@ -75,11 +82,11 @@
       borderRadius: "6px"
     }
   }
-  function endHover() {
-    if (!collapsed.value) return
-    hovering.value = false
-    bodyStyle.value = {}
-  }
+  // function endHover() {
+  //   if (!collapsed.value) return
+  //   hovering.value = false
+  //   dropdownElStyle.value = {}
+  // }
 </script>
 
 <style lang="sass" scoped>
