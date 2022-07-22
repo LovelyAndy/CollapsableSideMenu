@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="_custom-select" @blur="dropdownIsOpen = false">
+  <div class="_custom-select" @blur="() => closeDropdown()" @mouseenter="() => startHover()">
     <div class="_custom-select-inner" @click="dropdownIsOpen = !dropdownIsOpen">
       <div style="display: flex">
         <img style="width: 34px" class="_icon" src="../assets/profile-icon.svg" alt="Change Language Icon" />
@@ -9,7 +9,13 @@
           <img class="_icon" src="../assets/chevron-down.svg" alt="" />
         </div>
       </div>
-      <ul v-show="!collapsed" ref="bodyEl" class="_options" :style="bodyStyle">
+      <ul
+        v-show="hovering || !collapsed"
+        ref="dropdownEl"
+        class="_options"
+        :style="dropdownElStyle"
+        @mouseleave="() => closeDropdown()"
+      >
         <li @click="logout">Logout</li>
         <li>
           <router-link to="/">User Management</router-link>
@@ -30,15 +36,38 @@
   import { collapsed } from "./state"
   const dropdownIsOpen = ref(true)
   if (collapsed) dropdownIsOpen.value = false
-  const bodyEl = ref<any>(null)
-  const bodyStyle = ref({})
+  const dropdownEl = ref<any>(null)
+  const dropdownElStyle = ref({})
   const update = () =>
-    (bodyStyle.value = {
-      maxHeight: `${dropdownIsOpen.value ? bodyEl.value.scrollHeight : 0}px`
+    (dropdownElStyle.value = {
+      maxHeight: `${dropdownIsOpen.value ? dropdownEl.value.scrollHeight : 0}px`
     })
   watchEffect(update)
   onMounted(() => window.addEventListener("resize", update))
   onBeforeUnmount(() => window.removeEventListener("resize", update))
+  function openDropdown() {
+    if (collapsed.value) return
+    dropdownIsOpen.value = !dropdownIsOpen.value
+  }
+  function closeDropdown() {
+    dropdownIsOpen.value = false
+    hovering.value = false
+    dropdownElStyle.value = {}
+  }
+  const hovering = ref(false)
+  function startHover() {
+    if (!collapsed.value) return
+    hovering.value = true
+    dropdownElStyle.value = {
+      maxHeight: "fit-content",
+      position: "absolute",
+      top: "-160%",
+      left: "120%",
+      background: "#4272ce",
+      padding: "1rem",
+      borderRadius: "6px"
+    }
+  }
   function logout() {
     alert("You have been logged out!")
   }

@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="_custom-select" @blur="() => closeDropdown()" @mouseenter="() => startHover()">
-    <!-- @mouseleave="() => endHover()" -->
     <div class="_custom-select-inner" @click="() => openDropdown()">
       <div style="display: flex">
         <img style="width: 34px" class="_icon" src="../assets/languages-icon.svg" alt="Change Language Icon" />
@@ -75,18 +74,13 @@
     dropdownElStyle.value = {
       maxHeight: "fit-content",
       position: "absolute",
-      top: "-20%",
+      top: "-160%",
       left: "120%",
       background: "#4272ce",
       padding: "1rem",
       borderRadius: "6px"
     }
   }
-  // function endHover() {
-  //   if (!collapsed.value) return
-  //   hovering.value = false
-  //   dropdownElStyle.value = {}
-  // }
 </script>
 
 <style lang="sass" scoped>

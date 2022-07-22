@@ -151,5 +151,5 @@
 
   ._dropdowns
     margin-top: auto
-    margin-bottom: 3em
+    margin-bottom: 4em
 </style>
