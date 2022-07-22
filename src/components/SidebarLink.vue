@@ -63,8 +63,6 @@
   ._icon
     border-radius: 6px
     width: 34px
-    // &:hover
-    //   background-color: var(--sidebar-item-hover)
   .active
     ._icon,
     ._tab-label
@@ -76,6 +74,4 @@
     text-align: left
     border-radius: 6px
     padding: 8px 18px
-    // &:hover
-    //   background-color: var(--sidebar-item-hover)
 </style>

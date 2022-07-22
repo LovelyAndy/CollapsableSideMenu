@@ -6,7 +6,6 @@
 </template>
 <script lang="ts" setup>
   import { PropType } from "vue"
-  import { collapsed } from "./state"
   const props = defineProps({
     text: { type: String, required: true },
     flow: {
