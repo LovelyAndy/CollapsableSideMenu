@@ -1,10 +1,22 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script lang="ts" setup>
+  import { computed } from "vue"
   import SidebarLink from "./SidebarLink.vue"
-  import { collapsed, toggleSidebar, sidebarWidth } from "./state"
+  // import { collapsed, toggleSidebar, sidebarWidth } from "./state"
   import LangDropdown from "./LangDropdown.vue"
   import MyAccountDropdown from "./MyAccountDropdown.vue"
-  const emit = defineEmits(["change"])
+  const emit = defineEmits(["change", "update:collapsed"])
+  const props = defineProps({
+    collapsed: { type: Boolean, default: false }
+  })
+  // function toggleSidebar() {
+  //   props.collapsed = !props.collapsed
+  // }
+
+  const SIDEBAR_WIDTH = 232
+  const SIDEBAR_WIDTH_COLLAPSED = 50
+  const sidebarWidth = computed(() => `${props.collapsed ? SIDEBAR_WIDTH_COLLAPSED : SIDEBAR_WIDTH}px`)
+
   function changeLang(lang: any) {
     emit("change", lang)
   }
@@ -12,7 +24,7 @@
 
 <template>
   <div class="_sidebar" :style="{ width: sidebarWidth }">
-    <div class="_collapse-icon" :class="{ '_rotate-180': collapsed }" @click="toggleSidebar">
+    <div class="_collapse-icon" :class="{ '_rotate-180': collapsed }" @click="$emit('update:collapsed', !collapsed)">
       <img src="../assets/chevron-left.svg" alt="Collapse Sidebar" />
     </div>
     <router-link style="text-decoration: none" to="/">
@@ -29,6 +41,7 @@
         label="Videos"
         :tooltipText="collapsed ? 'Videos' : ''"
         tooltipFlow="right"
+        :collapsed="collapsed"
       />
       <SidebarLink
         to="/annotator"
@@ -36,6 +49,7 @@
         label="Annotator"
         :tooltipText="collapsed ? 'Annotator' : ''"
         tooltipFlow="right"
+        :collapsed="collapsed"
       />
       <SidebarLink
         to="/training"
@@ -43,6 +57,7 @@
         label="Training"
         :tooltipText="collapsed ? 'Training' : ''"
         tooltipFlow="right"
+        :collapsed="collapsed"
       />
       <SidebarLink
         to="/inference"
@@ -50,6 +65,7 @@
         label="Inference"
         :tooltipText="collapsed ? 'Inference' : ''"
         tooltipFlow="right"
+        :collapsed="collapsed"
       />
       <SidebarLink
         to="/work-insights"
@@ -57,16 +73,18 @@
         label="Work Insights"
         :tooltipText="collapsed ? 'Work Insights' : ''"
         tooltipFlow="right"
+        :collapsed="collapsed"
       />
     </div>
     <div class="_dropdowns">
       <LangDropdown
         tabindex="0"
+        :collapsed="collapsed"
         :options="['English', 'Simplified Chinese', 'Traditional Chinese']"
         :default="'English'"
         @input="changeLang"
       />
-      <MyAccountDropdown tabindex="0" />
+      <MyAccountDropdown tabindex="0" :collapsed="collapsed" />
     </div>
   </div>
 </template>

@@ -32,21 +32,26 @@
 </template>
 
 <script lang="ts" setup>
-  import { PropType, ref, watchEffect, onMounted, onBeforeUnmount } from "vue"
-  import { collapsed } from "./state"
-  const dropdownIsOpen = ref(true)
-  if (collapsed) dropdownIsOpen.value = false
+  import { PropType, ref, watch, onMounted, onBeforeUnmount } from "vue"
+  const props = defineProps({
+    collapsed: { type: Boolean, default: false }
+  })
+  const dropdownIsOpen = ref(false)
+  if (props.collapsed) dropdownIsOpen.value = false
   const dropdownEl = ref<any>(null)
   const dropdownElStyle = ref({})
   const update = () =>
     (dropdownElStyle.value = {
       maxHeight: `${dropdownIsOpen.value ? dropdownEl.value.scrollHeight : 0}px`
     })
-  watchEffect(update)
-  onMounted(() => window.addEventListener("resize", update))
+  watch(dropdownIsOpen, update)
+  onMounted(() => {
+    window.addEventListener("resize", update)
+    update()
+  })
   onBeforeUnmount(() => window.removeEventListener("resize", update))
   function openDropdown() {
-    if (collapsed.value) return
+    if (props.collapsed) return
     dropdownIsOpen.value = !dropdownIsOpen.value
   }
   function closeDropdown() {
@@ -56,7 +61,7 @@
   }
   const hovering = ref(false)
   function startHover() {
-    if (!collapsed.value) return
+    if (!props.collapsed) return
     hovering.value = true
     dropdownElStyle.value = {
       maxHeight: "fit-content",

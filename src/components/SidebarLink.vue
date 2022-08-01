@@ -1,7 +1,6 @@
 <script lang="ts">
   import { computed, ref } from "vue"
   import { useRoute } from "vue-router"
-  import { collapsed } from "./state"
   import { icons } from "../assets"
   import Tooltip from "./Tooltip.vue"
 
@@ -12,12 +11,13 @@
       label: { type: String, required: true },
       icon: { type: String, required: true },
       tooltipText: { type: String, required: true },
-      tooltipFlow: { type: String, required: true }
+      tooltipFlow: { type: String, required: true },
+      collapsed: { type: Boolean, default: false }
     },
     setup(props: any) {
       const route = useRoute()
       const isActive = computed(() => route.path === props.to)
-      return { isActive, collapsed, icons }
+      return { isActive, icons }
     }
   }
 </script>

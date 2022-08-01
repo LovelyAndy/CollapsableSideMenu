@@ -1,7 +1,7 @@
 <template>
   <div class="app">
-    <Sidebar @change="changeLanguage" />
-    <div :style="{ 'margin-left': sidebarWidth }">
+    <Sidebar v-model:collapsed="collapsed" @change="changeLanguage" />
+    <div>
       <router-view />
     </div>
   </div>
@@ -10,12 +10,12 @@
 <script lang="ts" setup>
   import { ref } from "vue"
   import Sidebar from "./components/Sidebar.vue"
-  import { sidebarWidth } from "./components/state"
   const selectedLanguage = ref<String>("English")
   function changeLanguage(lang: string) {
     console.log(selectedLanguage.value)
     selectedLanguage.value = lang
   }
+  const collapsed = ref(false)
 </script>
 
 <style lang="sass">
